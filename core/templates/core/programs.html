@@ -1,0 +1,23 @@
+{% extends "core/host_base.html" %}
+{% block title %}Programs{% endblock %}
+{% block content %}
+<div class="between wrap">
+  <h2>Programs &amp; functions</h2>
+  <a class="btn primary" href="{% url 'program_add' %}">+ Add program</a>
+</div>
+{% for r in rows %}
+<article class="card program">
+  <div class="datebox"><b>{{ r.event.starts_at|date:"d" }}</b><span>{{ r.event.starts_at|date:"M" }}</span></div>
+  <div class="pinfo">
+    <strong>{{ r.event.name }}</strong>
+    <small>{{ r.event.starts_at|date:"l · h:i A" }}{% if r.event.display_venue %} · {{ r.event.display_venue }}{% endif %}</small>
+    {% if r.event.dress_code %}<small>👗 {{ r.event.dress_code }}</small>{% endif %}
+    <small class="muted">{{ r.people }} people confirmed · {{ r.invited }} famil{{ r.invited|pluralize:"y,ies" }} invited</small>
+  </div>
+  <a class="btn ghost small" href="{% url 'program_edit' r.event.pk %}">Edit</a>
+</article>
+{% empty %}
+<div class="card empty"><p>No programs yet. Add each function - Mehendi, Haldi, Sangeet, Wedding, Reception...</p>
+<a class="btn primary" href="{% url 'program_add' %}">Add the first program</a></div>
+{% endfor %}
+{% endblock %}

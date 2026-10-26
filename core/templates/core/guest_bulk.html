@@ -1,0 +1,14 @@
+{% extends "core/host_base.html" %}
+{% block title %}Quick add guests{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h2>Quick add guests</h2>
+  <p class="muted">Paste or type your list. Everyone is invited to all programs by default; you can change that per guest later.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include "core/_field.html" with field=form.lines %}
+    {% include "core/_field.html" with field=form.side %}
+    <div class="row"><button class="btn primary" type="submit">Add guests</button><a class="btn ghost" href="{% url 'guest_list' %}">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}

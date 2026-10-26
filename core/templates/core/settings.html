@@ -1,0 +1,29 @@
+{% extends "core/host_base.html" %}
+{% block title %}Wedding details{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="card narrow">
+  {% csrf_token %}
+  <h2>Wedding details</h2>
+  <p class="muted">These appear on every guest's invitation page. Your invitation code is shown below so guests and attendance viewers can join.</p>
+  {% for e in form.non_field_errors %}<div class="msg error">{{ e }}</div>{% endfor %}
+  {% include "core/_field.html" with field=form.couple_names %}
+  {% include "core/_field.html" with field=form.tagline %}
+  <div class="two">
+    {% include "core/_field.html" with field=form.wedding_date %}
+    {% include "core/_field.html" with field=form.rsvp_deadline %}
+  </div>
+  {% include "core/_field.html" with field=form.destination %}
+  {% include "core/_field.html" with field=form.venue_name %}
+  {% include "core/_field.html" with field=form.venue_address %}
+  {% include "core/_field.html" with field=form.map_link %}
+  {% include "core/_field.html" with field=form.arrival_help %}
+  <div class="two">
+    {% include "core/_field.html" with field=form.host_contact_name %}
+    {% include "core/_field.html" with field=form.host_contact_phone %}
+  </div>
+  {% include "core/_field.html" with field=form.invite_message %}
+  {% include "core/_field.html" with field=form.invitation_file %}
+  <div class="msg"><strong>Guest invitation code:</strong> {{ form.instance.invite_code }}<br>Share this code only with people you want to join this wedding.</div>
+  <button class="btn primary" type="submit">Save details</button>
+</form>
+{% endblock %}

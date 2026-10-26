@@ -1,0 +1,24 @@
+{% extends "core/host_base.html" %}
+{% block title %}{% if event %}Edit program{% else %}Add program{% endif %}{% endblock %}
+{% block content %}
+<form method="post" class="card narrow">
+  {% csrf_token %}
+  <h2>{% if event %}Edit {{ event.name }}{% else %}Add program{% endif %}</h2>
+  {% for e in form.non_field_errors %}<div class="msg error">{{ e }}</div>{% endfor %}
+  {% include "core/_field.html" with field=form.name %}
+  <div class="two">
+    {% include "core/_field.html" with field=form.starts_at %}
+    {% include "core/_field.html" with field=form.ends_at %}
+  </div>
+  {% include "core/_field.html" with field=form.venue %}
+  {% include "core/_field.html" with field=form.address %}
+  {% include "core/_field.html" with field=form.map_link %}
+  {% include "core/_field.html" with field=form.dress_code %}
+  {% include "core/_field.html" with field=form.description %}
+  <div class="row">
+    <button class="btn primary" type="submit">Save</button>
+    <a class="btn ghost" href="{% url 'program_list' %}">Cancel</a>
+    {% if event %}<a class="btn danger-ghost" href="{% url 'program_delete' event.pk %}">Delete</a>{% endif %}
+  </div>
+</form>
+{% endblock %}

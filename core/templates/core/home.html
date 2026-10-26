@@ -1,0 +1,1124 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wedding Planner | Plan Your Perfect Wedding</title>
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+
+        body {
+
+            font-family: 'Poppins', sans-serif;
+
+            color: #172b3a;
+
+            background: #fff;
+
+        }
+
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+
+        .navbar {
+
+            min-height: 82px;
+
+            padding: 16px 7%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 25px;
+
+            background: #fff;
+
+            flex-wrap: wrap;
+
+        }
+
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
+        .logo-icon {
+
+            color: #a62450;
+
+            font-size: 43px;
+
+        }
+
+
+
+        .logo h2 {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 25px;
+
+            font-weight: 500;
+
+        }
+
+
+
+        .logo p {
+
+            font-size: 12px;
+
+            color: #657586;
+
+        }
+
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 28px;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+        }
+
+
+
+        .nav-links a {
+
+            font-size: 14px;
+
+            transition: color .2s;
+
+        }
+
+
+
+        .nav-links a:hover {
+
+            color: #a62450;
+
+        }
+
+
+
+        .nav-buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+        }
+
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 11px 25px;
+
+            border-radius: 5px;
+
+            border: 1px solid #a62450;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+        }
+
+
+
+        .btn-outline {
+
+            color: #a62450;
+
+            background: transparent;
+
+        }
+
+
+
+        .btn-primary {
+
+            color: white;
+
+            background: #a62450;
+
+        }
+
+
+
+        .btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 5px 15px #a6245030;
+
+        }
+
+
+
+        .hero {
+
+            min-height: 430px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 65px 8%;
+
+            background:
+
+                linear-gradient(90deg,
+
+                rgba(255,247,241,.98) 0%,
+
+                rgba(255,241,231,.90) 43%,
+
+                rgba(255,241,231,.08) 100%),
+
+                url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85");
+
+            background-position: center;
+
+            background-size: cover;
+
+        }
+
+
+
+        .hero-content {
+
+            max-width: 570px;
+
+        }
+
+
+
+        .eyebrow {
+
+            color: #a62450;
+
+            font-size: 14px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+
+        }
+
+
+
+        .hero h1 {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: clamp(42px, 5vw, 65px);
+
+            line-height: 1.12;
+
+            margin-bottom: 20px;
+
+        }
+
+
+
+        .hero p {
+
+            color: #536475;
+
+            font-size: 16px;
+
+            line-height: 1.9;
+
+            margin-bottom: 27px;
+
+        }
+
+
+
+        .hero-actions {
+
+            display: flex;
+
+            gap: 14px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+
+        .features {
+
+            padding: 38px 7%;
+
+            background: #fcf3f5;
+
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 28px;
+
+            text-align: center;
+
+        }
+
+
+
+        .feature {
+            display: block;
+            color: inherit;
+            cursor: pointer;
+            display: block;
+            color: inherit;
+            cursor: pointer;
+            display: block;
+            color: inherit;
+            cursor: pointer;
+
+            padding: 8px;
+
+        }
+
+
+
+        .feature-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            display: grid;
+
+            place-items: center;
+
+            background: #f6e4ea;
+
+            color: #a62450;
+
+            font-size: 27px;
+
+        }
+
+
+
+        .feature h3 {
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .feature p {
+
+            color: #657586;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+        }
+
+
+
+        .about {
+
+            padding: 75px 8%;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 65px;
+
+            align-items: center;
+
+        }
+
+
+
+        .about-image {
+
+            min-height: 320px;
+
+            border-radius: 10px;
+
+            background:
+
+                url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1100&q=85")
+
+                center/cover;
+
+        }
+
+
+
+        .about-content h2 {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 37px;
+
+            line-height: 1.25;
+
+            margin-bottom: 18px;
+
+        }
+
+
+
+        .about-content p {
+
+            color: #657586;
+
+            font-size: 14px;
+
+            line-height: 1.9;
+
+            margin-bottom: 23px;
+
+        }
+
+
+
+        .section {
+
+            padding: 65px 8%;
+
+            text-align: center;
+
+        }
+
+
+
+        .section-heading {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 38px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .section-description {
+
+            color: #657586;
+
+            margin-bottom: 35px;
+
+            font-size: 14px;
+
+        }
+
+
+
+        .steps {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 25px;
+
+        }
+
+
+
+        .step {
+
+            padding: 30px 24px;
+
+            background: #fff8fa;
+
+            border: 1px solid #f3e2e8;
+
+            border-radius: 10px;
+
+        }
+
+
+
+        .step-number {
+
+            font-family: 'Playfair Display', serif;
+
+            color: #a62450;
+
+            font-size: 35px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .step h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .step p {
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            color: #657586;
+
+        }
+
+
+
+        .cta {
+
+            padding: 65px 20px;
+
+            text-align: center;
+
+            color: white;
+
+            background: #76223f;
+
+        }
+
+
+
+        .cta h2 {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 37px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+
+        .cta p {
+
+            margin-bottom: 25px;
+
+            color: #f4dfe7;
+
+            font-size: 14px;
+
+        }
+
+
+
+        .cta .btn {
+
+            color: #76223f;
+
+            background: white;
+
+            border-color: white;
+
+        }
+
+
+
+        footer {
+
+            background: #172b3a;
+
+            color: #e9edf0;
+
+            padding: 30px 7%;
+
+            text-align: center;
+
+            font-size: 13px;
+
+        }
+
+
+
+        footer p {
+
+            margin: 5px 0;
+
+        }
+
+
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+
+                justify-content: center;
+
+            }
+
+
+
+            .nav-links {
+
+                justify-content: center;
+
+            }
+
+
+
+            .features {
+
+                grid-template-columns: repeat(3, 1fr);
+
+            }
+
+        }
+
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 18px 5%;
+
+            }
+
+
+
+            .nav-links {
+
+                gap: 15px;
+
+            }
+
+
+
+            .hero {
+
+                padding: 55px 7%;
+
+                background-position: 60% center;
+
+            }
+
+
+
+            .hero h1 {
+
+                font-size: 43px;
+
+            }
+
+
+
+            .features {
+
+                grid-template-columns: repeat(2, 1fr);
+
+                padding: 30px 5%;
+
+            }
+
+
+
+            .about {
+
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+
+                padding: 50px 7%;
+
+            }
+
+
+
+            .about-image {
+
+                min-height: 260px;
+
+            }
+
+
+
+            .about-content h2,
+
+            .section-heading,
+
+            .cta h2 {
+
+                font-size: 30px;
+
+            }
+
+
+
+            .steps {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+
+            .nav-buttons {
+
+                justify-content: center;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+
+    <!-- Navigation -->
+
+    <header class="navbar">
+
+        <a href="{% url 'home' %}" class="logo">
+
+            <span class="logo-icon">♡</span>
+
+            <div>
+
+                <h2>Wedding Planner</h2>
+
+                <p>Plan · Celebrate · Remember</p>
+
+            </div>
+
+        </a>
+
+
+
+
+
+<nav class="nav-links">
+
+    <a href="{% url 'home' %}">Home</a>
+
+    <a href="#about">About</a>
+
+    <a href="#features">Features</a>
+
+    <a href="#how-it-works">How It Works</a>
+
+
+
+    {% if user.is_authenticated and user.is_staff %}
+
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+
+        <a href="{% url 'guest_list' %}">Guests</a>
+
+        <a href="{% url 'logistics' %}">Arrivals</a>
+
+        <a href="{% url 'program_list' %}">Programs</a>
+
+        <a href="{% url 'wedding_settings' %}">Settings</a>
+
+    {% endif %}
+
+
+
+    <a href="#contact">Contact</a>
+
+</nav>
+
+
+
+<div class="nav-buttons">
+
+    {% if user.is_authenticated %}
+
+        {% if user.is_staff %}
+
+            <a class="btn btn-primary"
+
+               href="{% url 'dashboard' %}">Open Dashboard</a>
+
+        {% endif %}
+
+
+
+        <form method="post" action="{% url 'logout' %}">
+
+            {% csrf_token %}
+
+            <button class="btn btn-outline" type="submit">
+
+                Log Out
+
+            </button>
+
+        </form>
+
+    {% else %}
+
+        <a class="btn btn-outline" href="{% url 'login' %}">
+
+            Login
+
+        </a>
+
+        <a class="btn btn-primary" href="{% url 'signup' %}">
+
+            Sign Up
+
+        </a>
+
+    {% endif %}
+
+</div>
+
+    </header>
+
+
+
+    <!-- Hero Section -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">Your dream wedding, our priority</div>
+
+            <h1>Plan Your Perfect Wedding</h1>
+
+            <p>
+
+                From guest management to event planning, organize every
+
+                detail of your special day in one place and create
+
+                unforgettable memories, stress-free.
+
+            </p>
+
+
+
+            <div class="hero-actions">
+
+                <a href="{% url 'signup' %}" class="btn btn-primary">
+
+                    Get Started
+
+                </a>
+
+                <a href="#how-it-works" class="btn btn-outline">
+
+                    Explore How It Works
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Features -->
+
+    <section class="features" id="features">
+        {% if user.is_authenticated and user.is_staff %}
+        <a class="feature" href="{% url 'guest_list' %}">
+            <div class="feature-icon">♧</div>
+            <h3>Guest Management</h3>
+            <p>Keep track of guests, RSVPs and special requests.</p>
+        </a>
+        <a class="feature" href="{% url 'program_list' %}">
+            <div class="feature-icon">▦</div>
+            <h3>Event Planning</h3>
+            <p>Organize your wedding events and schedules in one place.</p>
+        </a>
+        <a class="feature" href="{% url 'program_list' %}">
+            <div class="feature-icon">♧</div>
+            <h3>Program Coordination</h3>
+            <p>Keep your wedding functions and schedules organized.</p>
+        </a>
+        <a class="feature" href="{% url 'logistics' %}">
+            <div class="feature-icon">⌂</div>
+            <h3>Travel &amp; Stay</h3>
+            <p>Plan accommodation and transportation for your guests.</p>
+        </a>
+        <a class="feature" href="{% url 'wedding_settings' %}">
+            <div class="feature-icon">♡</div>
+            <h3>Wedding Details</h3>
+            <p>Keep important details together as your day approaches.</p>
+        </a>
+        {% else %}
+        <a class="feature" href="{% url 'login' %}">
+            <div class="feature-icon">♧</div>
+            <h3>Guest Management</h3>
+            <p>Log in as a wedding host to manage guests and RSVPs.</p>
+        </a>
+        <a class="feature" href="{% url 'login' %}">
+            <div class="feature-icon">▦</div>
+            <h3>Event Planning</h3>
+            <p>Log in as a wedding host to manage events and schedules.</p>
+        </a>
+        <a class="feature" href="{% url 'login' %}">
+            <div class="feature-icon">♧</div>
+            <h3>Program Coordination</h3>
+            <p>Log in as a wedding host to manage your functions.</p>
+        </a>
+        <a class="feature" href="{% url 'login' %}">
+            <div class="feature-icon">⌂</div>
+            <h3>Travel &amp; Stay</h3>
+            <p>Log in as a wedding host to manage guest arrivals and stays.</p>
+        </a>
+        <a class="feature" href="{% url 'login' %}">
+            <div class="feature-icon">♡</div>
+            <h3>Wedding Details</h3>
+            <p>Log in as a wedding host to update wedding details.</p>
+        </a>
+        {% endif %}
+    </section>
+
+
+
+    <!-- About -->
+
+    <section class="about" id="about">
+
+        <div class="about-image" role="img"
+
+             aria-label="Wedding flowers and decorations"></div>
+
+
+
+        <div class="about-content">
+
+            <div class="eyebrow">About Us</div>
+
+            <h2>Making Your Special Day Even More Special</h2>
+
+            <p>
+
+                Every wedding tells a unique story. Our Wedding Planner
+
+                helps you organize the important details, manage your
+
+                preparations and keep everything in one convenient place.
+
+            </p>
+
+            <p>
+
+                Spend less time worrying about arrangements and more time
+
+                enjoying the moments that make your celebration memorable.
+
+            </p>
+
+            <a href="#how-it-works" class="btn btn-primary">Learn More</a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- How It Works -->
+
+    <section class="section" id="how-it-works">
+
+        <div class="eyebrow">Simple and convenient</div>
+
+        <h2 class="section-heading">How It Works</h2>
+
+        <p class="section-description">
+
+            Start planning your celebration in three simple steps.
+
+        </p>
+
+
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="step-number">01</div>
+
+                <h3>Create Your Account</h3>
+
+                <p>
+
+                    Sign up to get started with your wedding planning
+
+                    journey.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="step-number">02</div>
+
+                <h3>Organize Your Plans</h3>
+
+                <p>
+
+                    Keep your event details, guest information and
+
+                    arrangements organized.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="step-number">03</div>
+
+                <h3>Celebrate Your Day</h3>
+
+                <p>
+
+                    Stay organized and focus on enjoying your special
+
+                    celebration.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Call to Action -->
+
+    <section class="cta" id="contact">
+
+        <h2>Ready to Plan Your Dream Wedding?</h2>
+
+        <p>
+
+            Start organizing your special day with Wedding Planner.
+
+        </p>
+
+        <a href="{% url 'signup' %}" class="btn">Create Your Account</a>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p><strong>Weddin&#x67;*&*&#x50;lanner</strong></p>
+
+        <p>Plan · Celebrate · Remember</p>
+
+        <p>&copy; 2027 Wedding Planner. All rights reserved.</p>
+
+    </footer>
+
+
+
+</body>
+
+</html>

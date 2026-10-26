@@ -1,0 +1,95 @@
+{% extends "core/host_base.html" %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<section class="hero-card">
+  <div>
+    <p class="eyebrow">{% if wedding.destination %}{{ wedding.destination }}{% else %}Your wedding{% endif %}</p>
+    <h1>{{ wedding.couple_names }}</h1>
+    <p class="muted-light">
+      {% if wedding.wedding_date %}{{ wedding.wedding_date|date:"l, j F Y" }}{% else %}Set your wedding date in Settings{% endif %}
+      {% if wedding.venue_name %} · {{ wedding.venue_name }}{% endif %}
+    </p>
+  </div>
+  {% if days_left is not None %}
+  <div class="days"><strong>{% if days_left >= 0 %}{{ days_left }}{% else %}0{% endif %}</strong><span>days to go</span></div>
+  {% endif %}
+</section>
+
+<section class="stats">
+  <a class="stat yes" href="{% url 'guest_list' %}?f=yes">
+    <span class="num">{{ stats.yes_people }}</span>
+    <span class="lbl">People confirmed</span>
+    <span class="sub">from {{ stats.yes_h }} famil{{ stats.yes_h|pluralize:"y,ies" }}</span>
+  </a>
+  <a class="stat maybe" href="{% url 'guest_list' %}?f=maybe">
+    <span class="num">{{ stats.maybe_h }}</span>
+    <span class="lbl">Not sure yet</span>
+    <span class="sub">up to {{ stats.maybe_seats }} people</span>
+  </a>
+  <a class="stat pending" href="{% url 'guest_list' %}?f=pending">
+    <span class="num">{{ stats.pending_h }}</span>
+    <span class="lbl">Not replied</span>
+    <span class="sub">{{ stats.pending_seats }} seats waiting</span>
+  </a>
+  <a class="stat no" href="{% url 'guest_list' %}?f=no">
+    <span class="num">{{ stats.no_h }}</span>
+    <span class="lbl">Can't come</span>
+    <span class="sub">{{ stats.no_seats }} seats freed</span>
+  </a>
+</section>
+
+<section class="card">
+  <div class="between"><h3>Headcount picture</h3><span class="muted">{{ stats.seats }} seats invited · {{ stats.households }} invitations</span></div>
+  <div class="bar">
+    <span class="seg yes" style="width:{{ pct.yes }}%"></span>
+    <span class="seg maybe" style="width:{{ pct.maybe }}%"></span>
+    <span class="seg pending" style="width:{{ pct.pending }}%"></span>
+    <span class="seg no" style="width:{{ pct.no }}%"></span>
+  </div>
+  <div class="legend">
+    <span><i class="dot yes"></i>Confirmed {{ stats.yes_people }}</span>
+    <span><i class="dot maybe"></i>Maybe {{ stats.maybe_seats }}</span>
+    <span><i class="dot pending"></i>Not replied {{ stats.pending_seats }}</span>
+    <span><i class="dot no"></i>Declined {{ stats.no_seats }}</span>
+  </div>
+</section>
+
+<section class="grid2">
+  <div class="card">
+    <h3>To do</h3>
+    <ul class="todo">
+      <li class="{% if stats.not_sent %}open{% else %}done{% endif %}">
+        <a href="{% url 'guest_list' %}?f=unsent">{{ stats.not_sent }} invitation{{ stats.not_sent|pluralize }} not sent yet</a></li>
+      <li class="{% if stats.no_arrival %}open{% else %}done{% endif %}">
+        <a href="{% url 'logistics' %}">{{ stats.no_arrival }} confirmed famil{{ stats.no_arrival|pluralize:"y,ies" }} without arrival time</a></li>
+      <li class="{% if stats.pickup_h %}open{% else %}done{% endif %}">
+        <a href="{% url 'logistics' %}?pickup=1">{{ stats.pickup_people }} people ({{ stats.pickup_h }} group{{ stats.pickup_h|pluralize }}) need pickup</a></li>
+      <li class="{% if stats.stay_h %}open{% else %}done{% endif %}">
+        {{ stats.stay_people }} people ({{ stats.stay_h }} group{{ stats.stay_h|pluralize }}) need a place to stay</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Latest replies</h3>
+    {% for g in recent %}
+      <a class="reply" href="{% url 'guest_edit' g.pk %}">
+        <span><strong>{{ g.name }}</strong><small>{{ g.responded_at|date:"d M, h:i A" }}</small></span>
+        <span class="badge badge-{{ g.status }}">{{ g.get_status_display }}{% if g.status == 'yes' %} · {{ g.members_coming }}{% endif %}</span>
+      </a>
+    {% empty %}
+      <p class="muted">No replies yet. Send invitations from the Guests tab.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="card">
+  <div class="between"><h3>Programs &amp; expected people</h3><a class="btn ghost small" href="{% url 'program_list' %}">Manage</a></div>
+  {% for r in event_rows %}
+    <div class="line">
+      <div><strong>{{ r.event.name }}</strong><small>{{ r.event.starts_at|date:"D, d M · h:i A" }}</small></div>
+      <div class="right"><strong>{{ r.people }}</strong><small>of {{ r.invited }} invited families</small></div>
+    </div>
+  {% empty %}
+    <p class="muted">No programs yet - <a href="{% url 'program_add' %}">add Mehendi, Sangeet, Wedding...</a></p>
+  {% endfor %}
+</section>
+{% endblock %}

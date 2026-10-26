@@ -1,0 +1,11 @@
+{% with n=request.resolver_match.url_name %}
+<a href="{% url 'dashboard' %}" class="{% if n == 'dashboard' %}active{% endif %}"><i>📊</i><span>Overview</span></a>
+<a href="{% url 'guest_list' %}" class="{% if 'guest' in n %}active{% endif %}"><i>👥</i><span>Guests</span></a>
+<a href="{% url 'logistics' %}" class="{% if n == 'logistics' %}active{% endif %}"><i>🚗</i><span>Arrivals</span></a>
+<a href="{% url 'program_list' %}" class="{% if 'program' in n %}active{% endif %}"><i>📅</i><span>Programs</span></a>
+<a href="{% url 'wedding_settings' %}" class="{% if n == 'wedding_settings' %}active{% endif %}"><i>⚙️</i><span>Settings</span></a>
+{% endwith %}
+
+{% if request.user.is_staff or can_view_attendance %}
+<a href="{% url 'attendance_view' %}" class="{% if n == 'attendance_view' %}active{% endif %}"><i>✓</i><span>Function Attendance</span></a>
+{% endif %}

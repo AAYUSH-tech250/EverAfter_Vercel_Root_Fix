@@ -1,0 +1,46 @@
+{% extends "core/host_base.html" %}
+{% block title %}Arrivals{% endblock %}
+{% block content %}
+<div class="between wrap">
+  <h2>Arrivals &amp; pickups</h2>
+  <div class="row">
+    {% if pickup_only %}<a class="btn ghost" href="{% url 'logistics' %}">Show everyone</a>
+    {% else %}<a class="btn ghost" href="{% url 'logistics' %}?pickup=1">Only pickups</a>{% endif %}
+    <a class="btn ghost" href="{% url 'logistics_export' %}{% if pickup_only %}?pickup=1{% endif %}">Export CSV</a>
+  </div>
+</div>
+<p class="muted">Everyone who said Yes or Maybe, sorted by arrival time - use this to plan cars and vans.</p>
+
+{% for d in day_rows %}
+<section class="card">
+  <div class="between"><h3>{{ d.date|date:"l, j F" }}</h3><span class="badge">{{ d.people }} people</span></div>
+  {% for g in d.guests %}
+  <a class="arrival" href="{% url 'guest_edit' g.pk %}">
+    <div class="time">{{ g.arrival_datetime|date:"h:i A" }}</div>
+    <div class="info">
+      <strong>{{ g.name }}</strong> <small>({{ g.members_coming }} {% if g.status == 'maybe' %}maybe{% endif %})</small>
+      <small>{{ g.get_arrival_mode_display|default:"Mode not given" }}{% if g.arrival_details %} · {{ g.arrival_details }}{% endif %}{% if g.arrival_from %} · from {{ g.arrival_from }}{% endif %}</small>
+    </div>
+    <div class="tags">
+      {% if g.needs_pickup %}<span class="tag pick">Pickup</span>{% endif %}
+      {% if g.needs_stay %}<span class="tag stay">Stay</span>{% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</section>
+{% empty %}
+<div class="card empty"><p>No arrival times received yet.</p></div>
+{% endfor %}
+
+{% if missing %}
+<section class="card">
+  <h3>Still need arrival details</h3>
+  {% for g in missing %}
+  <a class="reply" href="{% url 'guest_edit' g.pk %}">
+    <span><strong>{{ g.name }}</strong><small>{{ g.phone }}</small></span>
+    <span class="badge badge-{{ g.status }}">{{ g.get_status_display }}</span>
+  </a>
+  {% endfor %}
+</section>
+{% endif %}
+{% endblock %}

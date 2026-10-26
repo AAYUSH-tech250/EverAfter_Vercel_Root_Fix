@@ -1,0 +1,12 @@
+{
+  "builds": [
+    {
+      "src": "wedding_site/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb" }
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "wedding_site/wsgi.py" }
+  ]
+}

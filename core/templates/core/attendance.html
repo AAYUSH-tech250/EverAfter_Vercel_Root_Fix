@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+{% block title %}Function Attendance | EverAfter{% endblock %}
+{% block body_class %}host attendance-viewer{% endblock %}
+{% block body %}
+<header class="topbar">
+  <a class="brand" href="{% url 'attendance_view' %}"><span class="heart">♥</span> {{ wedding.couple_names|default:"Wedding Planner" }}</a>
+  <div class="topnav"><span class="muted">Read-only attendance view</span></div>
+  <form method="post" action="{% url 'logout' %}" class="logout">{% csrf_token %}<button class="linkbtn" type="submit">Log out</button></form>
+</header>
+<main class="container">
+  <section class="pagehead">
+    <p class="eyebrow">Limited access</p>
+    <h1>Function attendance</h1>
+    <p class="muted">This page shows guest names, RSVP status, and the functions they plan to attend. Personal contact and travel details are hidden.</p>
+  </section>
+  <section class="grid stats">
+    {% for event in event_rows %}
+    <article class="card">
+      <p class="muted">{{ event.name }}</p>
+      <h2>{{ event.people }} <small>people confirmed</small></h2>
+      {% if event.guests %}<p class="meta">{{ event.guests|join:", " }}</p>{% else %}<p class="muted">No confirmed guests yet.</p>{% endif %}
+    </article>
+    {% empty %}
+    <article class="card"><p>No functions have been added yet.</p></article>
+    {% endfor %}
+  </section>
+  <section class="card">
+    <div class="between wrap"><h2>Guest attendance list</h2><span class="badge">Read only</span></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Guest / family</th><th>RSVP status</th><th>Functions attending</th><th>Confirmed people</th></tr></thead>
+      <tbody>
+      {% for row in rows %}
+      <tr><td><strong>{{ row.name }}</strong></td><td><span class="badge badge-{{ row.status_code }}">{{ row.status }}</span></td><td>{% if row.functions %}{{ row.functions|join:", " }}{% else %}<span class="muted">Not confirmed</span>{% endif %}</td><td>{{ row.people }}</td></tr>
+      {% empty %}<tr><td colspan="4">No guests added yet.</td></tr>{% endfor %}
+      </tbody>
+    </table></div>
+  </section>
+</main>
+{% endblock %}

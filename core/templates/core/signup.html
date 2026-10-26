@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+{% block title %}Create account | EverAfter Wedding Planner{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+{% block body %}
+<style>
+.auth-page{min-height:100vh;background:#f8f5f2;color:#29252a;font-family:Inter,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:28px}.auth-shell{width:min(100%,1000px);min-height:620px;display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 70px #35202b18}.auth-art{padding:52px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;background:linear-gradient(145deg,#4b2537e8,#7c3d55d9),url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85') center/cover}.auth-brand{font-family:'Playfair Display',Georgia,serif;font-size:25px;letter-spacing:.2px}.auth-brand span{color:#f3cbd5}.auth-quote h2{font:500 clamp(32px,4vw,48px)/1.12 'Playfair Display',Georgia,serif;margin:0 0 18px}.auth-quote p{color:#f6eaf0;line-height:1.8;max-width:340px}.auth-art-foot{font-size:12px;color:#f0dfe6;letter-spacing:1.5px;text-transform:uppercase}.auth-panel{padding:44px 54px;display:flex;flex-direction:column;justify-content:center}.auth-kicker{color:#9a536b;text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:2px}.auth-panel h1{font:600 38px/1.15 'Playfair Display',Georgia,serif;margin:12px 0}.auth-sub{color:#77717a;line-height:1.7;margin:0 0 22px;font-size:14px}.auth-form .field{margin:0 0 12px}.auth-form .lbl{display:block;font-size:13px;font-weight:600;margin:0 0 7px;color:#403741}.auth-form input{width:100%;padding:12px 14px;border:1px solid #e4dce1;border-radius:10px;background:#fff;font:inherit;outline:none;box-sizing:border-box}.auth-form input:focus{border-color:#9a536b;box-shadow:0 0 0 3px #9a536b18}.auth-form .help{display:block;color:#89818a;font-size:11px;margin-top:6px;line-height:1.5}.auth-form .err,.auth-error{display:block;color:#a22f42;font-size:12px;margin-top:6px}.auth-error{padding:11px 13px;border-radius:9px;background:#fff0f1;margin:0 0 16px}.auth-submit{width:100%;border:0;border-radius:10px;padding:14px;background:#7c3d55;color:white;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;transition:.2s}.auth-submit:hover{background:#602b40;transform:translateY(-1px)}.auth-switch{text-align:center;color:#77717a;font-size:13px;margin:20px 0 0}.auth-switch a,.auth-back{color:#7c3d55;font-weight:700;text-decoration:none}.auth-switch a:hover,.auth-back:hover{text-decoration:underline}.auth-back{display:inline-block;margin-top:16px;font-size:12px}.auth-note{font-size:11px;color:#8a8188;line-height:1.6;margin-top:15px}.auth-note a{color:#7c3d55}@media(max-width:720px){.auth-page{padding:14px}.auth-shell{grid-template-columns:1fr;min-height:0}.auth-art{min-height:170px;padding:26px 28px}.auth-quote h2{font-size:28px;margin-top:24px}.auth-quote p,.auth-art-foot{display:none}.auth-panel{padding:30px 26px}.auth-panel h1{font-size:32px}}
+</style>
+<main class="auth-shell">
+  <aside class="auth-art"><a class="auth-brand" href="{% url 'home' %}" style="color:white;text-decoration:none">♡ Ever<span>After</span></a><div class="auth-quote"><h2>Make room<br>for the magic.</h2><p>Start organizing the little details so you can be fully present for the moments that matter.</p></div><div class="auth-art-foot">Plan with love · Celebrate forever</div></aside>
+  <section class="auth-panel"><div class="auth-kicker">Let's get started</div><h1>Create account</h1><p class="auth-sub">Set up your account to begin your wedding planning journey.</p>
+    <form class="auth-form" method="post" novalidate>{% csrf_token %}
+      {% if form.non_field_errors %}<div class="auth-error">{% for error in form.non_field_errors %}{{ error }}{% endfor %}</div>{% endif %}
+      {% for field in form %}{% include "core/_field.html" with field=field %}{% endfor %}
+      <button class="auth-submit" type="submit">Create my account&nbsp; →</button>
+    </form>
+    <script>
+      (function(){const role=document.getElementById('id_role');const code=document.getElementById('id_invite_code');if(!role||!code)return;function sync(){const field=code.closest('.field')||code.parentElement;field.style.display=(['guest','viewer'].includes(role.value))?'':'none';}role.addEventListener('change',sync);sync();})();
+    </script>
+    <p class="auth-switch">Already have an account? <a href="{% url 'login' %}">Sign in instead</a></p>
+    <p class="auth-note">Choose the correct account type. Guests and attendance viewers need the invitation code from the owner. Viewer accounts can see attendance only.</p>
+    <a class="auth-back" href="{% url 'home' %}">← Back to homepage</a>
+  </section>
+</main>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "core/base.html" %}
+{% block title %}{{ wedding.couple_names }} · Wedding Invitation{% endblock %}
+{% block body_class %}guestpage{% endblock %}
+{% block body %}
+<header class="invite-hero">
+  <p class="eyebrow">You are invited</p>
+  <h1>{{ wedding.couple_names }}</h1>
+  {% if wedding.tagline %}<p class="tagline">{{ wedding.tagline }}</p>{% endif %}
+  <div class="ornament">❦</div>
+  {% if wedding.wedding_date %}<p class="when">{{ wedding.wedding_date|date:"l, j F Y" }}</p>{% endif %}
+  {% if wedding.venue_name or wedding.destination %}
+    <p class="where">{{ wedding.venue_name }}{% if wedding.venue_name and wedding.destination %}, {% endif %}{{ wedding.destination }}</p>
+  {% endif %}
+  {% if wedding.map_link %}<a class="btn gold small" href="{{ wedding.map_link }}" target="_blank" rel="noopener">📍 Open in Maps</a>{% endif %}
+  <div id="countdown" data-date="{{ wedding_date_iso }}"></div>
+</header>
+
+<main class="container guest-container">
+  {% include "core/_messages.html" %}
+
+  <section class="card greet">
+    <p>Dear <strong>{{ guest.name }}</strong>,</p>
+    <p>We have reserved <strong>{{ guest.max_members }} seat{{ guest.max_members|pluralize }}</strong> for you. Please tell us if you can join - it helps us plan the arrangements.
+    {% if wedding.rsvp_deadline %}<br><span class="muted">Kindly reply by <strong>{{ wedding.rsvp_deadline|date:"j F" }}</strong>.</span>{% endif %}</p>
+    {% if guest.responded_at %}
+      <p class="status-line"><span class="badge badge-{{ guest.status }}">Your reply: {{ guest.get_status_display }}{% if guest.status == 'yes' %} · {{ guest.members_coming }} people{% endif %}</span> <small class="muted">You can update it below.</small></p>
+    {% endif %}
+  </section>
+
+  {% if events %}
+  <section class="card">
+    <h2>Programs</h2>
+    <div class="timeline">
+      {% for e in events %}
+      <div class="tl-item">
+        <div class="datebox"><b>{{ e.starts_at|date:"d" }}</b><span>{{ e.starts_at|date:"M" }}</span></div>
+        <div class="pinfo">
+          <strong>{{ e.name }}</strong>
+          <small>{{ e.starts_at|date:"l" }} · {{ e.starts_at|time:"h:i A" }}{% if e.ends_at %} - {{ e.ends_at|time:"h:i A" }}{% endif %}</small>
+          {% if e.display_venue %}<small>📍 {{ e.display_venue }}{% if e.address %}, {{ e.address }}{% endif %}</small>{% endif %}
+          {% if e.dress_code %}<small>👗 {{ e.dress_code }}</small>{% endif %}
+          {% if e.description %}<small class="muted">{{ e.description }}</small>{% endif %}
+          {% if e.map_link %}<a class="inline-link" href="{{ e.map_link }}" target="_blank" rel="noopener">View map</a>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if wedding.arrival_help or wedding.venue_address %}
+  <section class="card">
+    <h2>How to reach us</h2>
+    {% if wedding.venue_address %}<p>{{ wedding.venue_address|linebreaksbr }}</p>{% endif %}
+    {% if wedding.arrival_help %}<p>{{ wedding.arrival_help|linebreaksbr }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  <form method="post" class="card rsvp-form">
+    {% csrf_token %}
+    <h2>Your reply</h2>
+    {% for e in form.non_field_errors %}<div class="msg error">{{ e }}</div>{% endfor %}
+
+    {% include "core/_field.html" with field=form.status %}
+
+    <div data-show-for="yes maybe">
+      <div class="field{% if form.members_coming.errors %} has-error{% endif %}">
+        <label class="lbl" for="{{ form.members_coming.id_for_label }}">{{ form.members_coming.label }}</label>
+        <div class="stepper">
+          <button type="button" data-step="-1" aria-label="Fewer">−</button>
+          {{ form.members_coming }}
+          <button type="button" data-step="1" aria-label="More">+</button>
+        </div>
+        <small class="help">Up to {{ guest.max_members }}.</small>
+        {% for e in form.members_coming.errors %}<small class="err">{{ e }}</small>{% endfor %}
+      </div>
+      {% include "core/_field.html" with field=form.member_names %}
+      {% if events %}{% include "core/_field.html" with field=form.attending_events %}{% endif %}
+
+      <h3>Your travel <small class="muted">(so we can arrange rides &amp; stay)</small></h3>
+      {% include "core/_field.html" with field=form.arrival_datetime %}
+      <div class="two">
+        {% include "core/_field.html" with field=form.arrival_mode %}
+        {% include "core/_field.html" with field=form.arrival_from %}
+      </div>
+      {% include "core/_field.html" with field=form.arrival_details %}
+      {% include "core/_field.html" with field=form.needs_pickup %}
+      {% include "core/_field.html" with field=form.needs_stay %}
+    </div>
+
+    {% include "core/_field.html" with field=form.guest_note %}
+    <button class="btn primary block" type="submit">{% if guest.responded_at %}Update my reply{% else %}Send my reply{% endif %}</button>
+  </form>
+
+  {% if wedding.host_contact_name or wedding.host_contact_phone %}
+  <p class="center muted">Questions? Contact {{ wedding.host_contact_name }}
+    {% if wedding.host_contact_phone %}<a href="tel:{{ wedding.host_contact_phone }}">{{ wedding.host_contact_phone }}</a>{% endif %}</p>
+  {% endif %}
+  <p class="center footer-heart">♥</p>
+</main>
+{% endblock %}

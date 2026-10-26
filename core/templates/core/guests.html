@@ -1,0 +1,54 @@
+{% extends "core/host_base.html" %}
+{% block title %}Guests{% endblock %}
+{% block content %}
+<div class="between wrap">
+  <h2>Guests &amp; invitations</h2>
+  <div class="row">
+    <a class="btn primary" href="{% url 'guest_add' %}">+ Add guest</a>
+    <a class="btn ghost" href="{% url 'guest_bulk' %}">Quick add many</a>
+    <a class="btn ghost" href="{% url 'guest_export' %}">Export CSV</a>
+  </div>
+</div>
+
+<div class="chips">
+  <a class="chip {% if not f %}on{% endif %}" href="{% url 'guest_list' %}">All {{ counts.all }}</a>
+  <a class="chip {% if f == 'unsent' %}on{% endif %}" href="?f=unsent">Not sent {{ counts.unsent }}</a>
+  <a class="chip {% if f == 'yes' %}on{% endif %}" href="?f=yes">Coming {{ counts.yes }}</a>
+  <a class="chip {% if f == 'maybe' %}on{% endif %}" href="?f=maybe">Not sure {{ counts.maybe }}</a>
+  <a class="chip {% if f == 'pending' %}on{% endif %}" href="?f=pending">No reply {{ counts.pending }}</a>
+  <a class="chip {% if f == 'no' %}on{% endif %}" href="?f=no">Can't come {{ counts.no }}</a>
+</div>
+
+<form method="get" class="search">
+  {% if f %}<input type="hidden" name="f" value="{{ f }}">{% endif %}
+  <input type="search" name="q" value="{{ q }}" placeholder="Search name or phone">
+</form>
+
+{% for g in guests %}
+<article class="card guest">
+  <div class="between">
+    <div>
+      <strong class="gname">{{ g.name }}</strong>
+      <small class="muted">{{ g.get_side_display }} · {{ g.max_members }} seat{{ g.max_members|pluralize }}{% if g.phone %} · {{ g.phone }}{% endif %}</small>
+    </div>
+    <span class="badge badge-{{ g.status }}">{{ g.get_status_display }}{% if g.status == 'yes' %} · {{ g.members_coming }}{% endif %}</span>
+  </div>
+  {% if g.status != 'pending' and g.arrival_datetime %}
+    <p class="meta">🚗 {{ g.arrival_datetime|date:"D d M, h:i A" }}{% if g.arrival_from %} from {{ g.arrival_from }}{% endif %}{% if g.needs_pickup %} · <b>pickup needed</b>{% endif %}</p>
+  {% endif %}
+  <div class="row actions">
+    <form method="post" action="{% url 'guest_send' g.pk %}" target="_blank">{% csrf_token %}
+      <button class="btn wa small" type="submit">💬 {% if g.invite_sent_at %}Resend{% else %}Send{% endif %} on WhatsApp</button>
+    </form>
+    <button class="btn ghost small copy" type="button" data-link="{{ g.invite_link }}">Copy link</button>
+    <a class="btn ghost small" href="{% url 'guest_edit' g.pk %}">Edit</a>
+    {% if g.invite_sent_at %}<small class="muted">Sent {{ g.invite_sent_at|date:"d M" }}</small>{% else %}<small class="warn">Not sent</small>{% endif %}
+  </div>
+</article>
+{% empty %}
+<div class="card empty">
+  <p>No guests here yet.</p>
+  <a class="btn primary" href="{% url 'guest_bulk' %}">Add your guest list</a>
+</div>
+{% endfor %}
+{% endblock %}

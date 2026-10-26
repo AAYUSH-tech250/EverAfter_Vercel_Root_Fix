@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+{% block body_class %}host{% endblock %}
+{% block body %}
+<header class="topbar">
+  <a class="brand" href="{% url 'dashboard' %}"><span class="heart">♥</span> {{ wedding.couple_names|default:"Wedding Planner" }}</a>
+  <nav class="topnav">{% include "core/_nav.html" %}</nav>
+  <form method="post" action="{% url 'logout' %}" class="logout">{% csrf_token %}<button class="linkbtn" type="submit">Log out</button></form>
+</header>
+<main class="container">
+  {% include "core/_messages.html" %}
+  {% block content %}{% endblock %}
+</main>
+<nav class="bottomnav">{% include "core/_nav.html" %}</nav>
+{% endblock %}
